@@ -59,7 +59,7 @@ public:
     /**
      * @brief The children of this node in a map where the key is nodes function name.
      */
-    std::unordered_map<functionIdType, nodeIdType> children = {};
+    std::vector<std::pair<functionIdType, nodeIdType>> children;
 
     /**
      * @brief Creates an empty node.
@@ -98,6 +98,8 @@ public:
      * @return the child node id with the specified function id
      */
     nodeIdType findChild(functionIdType childId);
+    std::vector<std::pair<functionIdType, nodeIdType>>::iterator findChildIt(functionIdType childId);
+
 
     /**
      * @brief Comparison of nodes that is checking only the function id and is allows missmatched NodeData types.
@@ -164,17 +166,28 @@ CCTNode<NodeData>::~CCTNode() {
 
 template<class NodeData>
 void CCTNode<NodeData>::addChild(functionIdType fId, nodeIdType nodeId) {
-    this->children.emplace(fId, nodeId);
+    this->children.emplace_back(fId, nodeId);
 }
 
 template<class NodeData>
 void CCTNode<NodeData>::eraseChild(functionIdType childId) {
-    this->children.erase(childId);
+    auto it = this->findChildIt(childId);
+    if (it != this->children.end()) {
+        this->children.erase(it);
+    }
+}
+
+template<class NodeData>
+std::vector<std::pair<functionIdType, nodeIdType>>::iterator CCTNode<NodeData>::findChildIt(functionIdType childId) {
+    return std::ranges::find_if(children, [childId](const auto &val) {
+        auto &[fId, _] = val;
+        return fId == childId;
+    });
 }
 
 template<class NodeData>
 nodeIdType CCTNode<NodeData>::findChild(functionIdType childId) {
-    auto it = this->children.find(childId);
+    auto it = this->findChildIt(childId);
     return it != this->children.end() ? it->second : NULL_NODE_ID;
 }
 
