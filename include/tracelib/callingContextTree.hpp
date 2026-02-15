@@ -16,6 +16,7 @@
 #include <boost/serialization/split_member.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/unique_ptr.hpp>
+#include <absl/container/btree_map.h>
 
 #include "utils.hpp"
 
@@ -59,7 +60,7 @@ public:
     /**
      * @brief The children of this node in a map where the key is nodes function name.
      */
-    std::unordered_map<functionIdType, nodeIdType> children = {};
+    absl::btree_map<functionIdType, nodeIdType> children = {};
 
     /**
      * @brief Creates an empty node.

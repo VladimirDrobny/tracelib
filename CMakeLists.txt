@@ -9,6 +9,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(INCLUDE_EXAMPLE_PROGRAMS "Include the example programs in building process." OFF)
 
+set(ABSL_ENABLE_INSTALL ON CACHE BOOL "" FORCE)
+set(ABSL_PROPAGATE_CXX_STD ON CACHE BOOL "" FORCE)
 add_subdirectory(abseil-cpp)
 
 # Directory structure
@@ -44,7 +46,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${PROJECT_NAME}
+        PUBLIC
+        absl::btree
+        PRIVATE
         Boost::serialization
         nlohmann_json::nlohmann_json
         zstd
