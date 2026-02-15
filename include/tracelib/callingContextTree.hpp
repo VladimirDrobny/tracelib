@@ -16,6 +16,7 @@
 #include <boost/serialization/split_member.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/unique_ptr.hpp>
+#include <absl/container/flat_hash_map.h>
 
 #include "utils.hpp"
 
