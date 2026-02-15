@@ -9,6 +9,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(INCLUDE_EXAMPLE_PROGRAMS "Include the example programs in building process." OFF)
 
+add_subdirectory(abseil-cpp)
+
 # Directory structure
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
