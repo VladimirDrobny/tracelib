@@ -187,8 +187,12 @@ std::vector<std::pair<functionIdType, nodeIdType>>::iterator CCTNode<NodeData>::
 
 template<class NodeData>
 nodeIdType CCTNode<NodeData>::findChild(functionIdType childId) {
-    auto it = this->findChildIt(childId);
-    return it != this->children.end() ? it->second : NULL_NODE_ID;
+    for (auto &[fId, child] : this->children) {
+        if (fId == childId) {
+            return child;
+        }
+    }
+    return NULL_NODE_ID;
 }
 
 
