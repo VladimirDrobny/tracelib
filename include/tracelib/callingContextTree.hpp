@@ -945,8 +945,8 @@ nodeIdType CCTree<NodeData>::emplaceNode(functionIdType fId, nodeIdType parentId
 template<class NodeData>
 std::pair<nodeIdType, bool> CCTree<NodeData>::tryEmplaceChild(nodeIdType nodeId, functionIdType childFunctionId) {
     auto &node = this->getNode(nodeId);
-    if (auto child = node.children.find(childFunctionId); child != node.children.end()) {
-        return { child->second, false };
+    if (auto child = node.findChild(childFunctionId); child != NULL_NODE_ID) {
+        return { child, false };
     }
 
     auto newChildNodeId = this->emplaceNode(childFunctionId, nodeId);
